@@ -9,10 +9,9 @@ import {
   setDoc
 } from 'firebase/firestore'
 
-
 // Web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "Put your own keys",
+  apiKey: "AIzaSyBTo_edmjHo1CXrHA0_HdiQrA71-j6FQEI",
   authDomain: "coronet-clothing-db-5fcd9.firebaseapp.com",
   projectId: "coronet-clothing-db-5fcd9",
   storageBucket: "coronet-clothing-db-5fcd9.appspot.com",
@@ -24,21 +23,21 @@ const firebaseConfig = {
    
 const firebaseApp = initializeApp(firebaseConfig);
 
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
     prompt: " select_account"
 
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 // Creating db
-
 export const db = getFirestore();
 
 // Method to take data from authentication and store that inside the firestore.
-export const creactUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (userAuth) => {
   //Check first if there is a document referance
 
   const userDocRef = doc(db, 'users', userAuth.uid);
