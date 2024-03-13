@@ -12,7 +12,7 @@ import {
 
 // Web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBTo_edmjHo1CXrHA0_HdiQrA71-j6FQEI",
+  apiKey: "Put your own keys",
   authDomain: "coronet-clothing-db-5fcd9.firebaseapp.com",
   projectId: "coronet-clothing-db-5fcd9",
   storageBucket: "coronet-clothing-db-5fcd9.appspot.com",
