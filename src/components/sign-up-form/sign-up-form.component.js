@@ -1,10 +1,15 @@
-import Reat, { useState} from 'react'
+import Reat, { useState } from 'react'
+import FormInput from '../form-input/form-input.component';
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils';
+
+import './sign-up-form.style.scss';
+
 
 // We can track each input using their states
 // we can also use an object as long as we know all input have the same inputs.
 
 const defaultFormFields = {
-    enterNames: '',
+    displayName: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -12,57 +17,83 @@ const defaultFormFields = {
 
 const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
-    const { enterNames, email, password, confirmPassword } = formFields;
+    const { displayName, email, password, confirmPassword } = formFields;
 
     console.log(formFields);
 
-    // To be able to handle changes , we need to create a function to do so
+    // Ressetting form fields after submission
+    const resetFormFields = () => {
+        setFormFields(defaultFormFields);
+    }
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (password !== confirmPassword) {
+            alert("Passwords missmatch!!");
+            return;
+        }
+        // Then attempt to create the user with try & catch as we can fail to call to extrenal firebase server
+        
+        try {
+            const { user } = await createAuthUserWithEmailAndPassword(email, password);
+            await createUserDocumentFromAuth(user, { displayName });
+            resetFormFields();
+            
+        } catch (error) {
+            if (error.code === 'auth/email-already-in-use') {
+                alert('Can not create user, email already in use');
+            } else {
+                
+                console.log('User creation encountered an error', error);         
+            }
+        }        
+    }
+
+    // To be able to handle changes , we need to create a function to do so
     const handleChange = (event) => {
+
         const { name, value } = event.target;
 
         setFormFields({ ...formFields, [name]: value });
     }
 
     return (
-        <div>
-            <h1> Sign up with email and password </h1>
-            <form onSubmit={ () =>{}}>
-                <label>Enter Names</label>
-                <input
+        <div className='sign-up-container'>
+            <h2> Don't have an account? </h2>
+            <span> Sign up with email and password </span>
+            <form onSubmit={ handleSubmit }>              
+                <FormInput
+                    label = "DisplayName "
                     type='text' required
                     onChange={handleChange}
-                    name='enterNames'
-                    value={enterNames}
+                    name='displayName'
+                    value={displayName}
                 />
-
-                <label> Email </label>
-                <input
+                <FormInput
+                    label = "Email"
                     type='email' required
                     onChange={handleChange}
                     name='email'
                     value={email}
                 />
-
-                <label>Password</label>
-                <input type='password' required
-                    placeholder='Enter your password'
+                <FormInput
+                     label = "Password"
+                    type='password' required
+                    //placeholder='Enter your password'
                     onChange={handleChange}
                     name='password'
                     value={password}
                 />
-
-                <label>Confirm Password</label>
-                <input
+                <FormInput
+                    label = "Confirm Password"
                     type='password' required
-                    placeholder='Comfirm password'
+                    //placeholder='Confirm password'
                     onChange={handleChange}
-                    name='comfirmPassword'
+                    name='confirmPassword'
                     value={confirmPassword}
-                />
-                
+                />               
                 <button type='submit'>Sign Up</button>
-
             </form>
         </div>
     )
