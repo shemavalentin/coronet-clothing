@@ -3,6 +3,7 @@ import FormInput from '../form-input/form-input.component';
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils';
 
 import './sign-up-form.style.scss';
+import Button from '../button/button.component';
 
 
 // We can track each input using their states
@@ -93,7 +94,7 @@ const SignUpForm = () => {
                     name='confirmPassword'
                     value={confirmPassword}
                 />               
-                <button type='submit'>Sign Up</button>
+                <Button type='submit'>Sign Up</Button>
             </form>
         </div>
     )
