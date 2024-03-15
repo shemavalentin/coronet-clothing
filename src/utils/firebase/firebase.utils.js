@@ -6,7 +6,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut
 } from 'firebase/auth';
 
 
@@ -67,12 +68,10 @@ export const createUserDocumentFromAuth = async (
         email,
         createdAt,
         ...additionalInformation
-
       });
 
     } catch (error) {
-      console.log('error creating the user', error.message);
-      
+      console.log('error creating the user', error.message);      
     }
   }
 
@@ -82,13 +81,20 @@ export const createUserDocumentFromAuth = async (
 
 // Authenticating user to the firebase and manage how the app interfaces with the external service (firebase) so that I'll be able to change in one place even though methods have been used in many places
 
+// INterface for creating user to Firebase
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password)
     return;
   return await createUserWithEmailAndPassword(auth, email, password)
 }
+
+//Authenticating user Interface
+
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password)
     return;
   return await signInWithEmailAndPassword(auth, email, password)
 }
+
+// Interface for SigningOut the user 
+export const signOutUser = async () => await signOut(auth);

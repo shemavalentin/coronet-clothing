@@ -1,9 +1,9 @@
-import Reat, { useState } from 'react'
+import Reat, { useState, useContext } from 'react'
 import FormInput from '../form-input/form-input.component';
 import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils';
-
 import './sign-in-form.style.scss';
 import Button from '../button/button.component';
+import { UserContext } from '../../contexts/user.context'
 
 // We can track each input using their states
 // we can also use an object as long as we know all input have the same inputs.
@@ -16,6 +16,9 @@ const defaultFormFields = {
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
+
+    // Using the context
+    const {setCurrentUser } = useContext(UserContext);
 
     // Ressetting form fields after submission
     const resetFormFields = () => {
@@ -33,8 +36,9 @@ const SignInForm = () => {
         // Then attempt to create the user with try & catch as we can fail to call to extrenal firebase server
         
         try {
-            const response = await signInAuthUserWithEmailAndPassword(email, password);
-            console.log(response);           
+            const { user } = await signInAuthUserWithEmailAndPassword(email, password);
+            setCurrentUser(user);
+                     
             resetFormFields();
             
         } catch (error) {
