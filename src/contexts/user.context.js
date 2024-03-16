@@ -7,7 +7,7 @@ import { onAuthStateChangedListener,createUserDocumentFromAuth } from '../utils/
 export const UserContext = createContext({
     currentUser: null,
     setCurrentUser: () => null
-});
+}); 
 
 // UserProvider: the actual component( the literal functional component)
 // to allow any of it's children to access values of its use state.
