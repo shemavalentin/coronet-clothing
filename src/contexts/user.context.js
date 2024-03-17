@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const value = { currentUser, setCurrentUser };
 
-    // Mounting the onAuthStateChangedListener to User Context/ unmounting after run
+    // Mounting the onAuthStateChangedListener which is an observer listener to User Context/ unmounting after run
     useEffect(() => {
         const unsubscribe = onAuthStateChangedListener((user) => {
             if (user) {

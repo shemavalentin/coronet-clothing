@@ -101,5 +101,5 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 export const signOutUser = async () => await signOut(auth);
 
 // Creating a helper function for Observer Listener pettern
-
+// It is an observer listerner
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
