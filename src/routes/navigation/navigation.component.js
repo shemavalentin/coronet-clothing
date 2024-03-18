@@ -4,14 +4,19 @@ import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/card-dropdown/cart-dropdown.component";
 import { ReactComponent as CoronetLogo } from '../../assets/crown.svg';
 import { UserContext } from "../../contexts/user.context";
+import { CartContext } from "../../contexts/cart.contenxt";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import './navigation.style.scss';
 
-
 //Building navigation bar that will always stay on the page
 const Navigation = () => {
+  // Importing user context in navigation to use it
   const { currentUser } = useContext(UserContext);
 
+  // bringing Cart context to naviagation component in order to use it
+
+  const { isCartOpen } = useContext(CartContext);
+  
   return (
     <>
       <div className="navigation">
@@ -22,7 +27,6 @@ const Navigation = () => {
           <Link className=" nav-link" to='/shop'>
             SHOP
           </Link>
-
           {/* We need to the logged in user the sign out option  */}
 
           {
@@ -38,7 +42,8 @@ const Navigation = () => {
             )}
           <CartIcon />
         </div>
-        <CartDropdown />
+        {/* Using short circuit operator and the functions are alwayse truthy */}
+        { isCartOpen && <CartDropdown />}
       </div>
       <Outlet />
     </>
