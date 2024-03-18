@@ -12,7 +12,7 @@ Let's create a variable
 
 const BUTTON_TYPE_CLASSES = {
     google: 'google-sign-in',
-    inveted: 'inverted'
+    inverted: 'inverted'
 }
 const Button = ({children, buttonType, ...otherProps}) => {
     return(
