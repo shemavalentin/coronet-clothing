@@ -5,7 +5,7 @@ import './button.styles.scss';
 
 1.  default
 2.  inverted
-3.  google sign in
+3.  google sign in button
 
 Let's create a variable
 */

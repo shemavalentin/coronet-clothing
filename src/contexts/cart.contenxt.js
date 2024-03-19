@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 
 // Helper function to help in finding in existing array and increase it if found one match the ID
@@ -26,15 +26,21 @@ export const CartContext = createContext({
     setCartIsOpen: () => { },
     cartItems: [],
 
-    // function to add to quantity separately and control it.
-    
-    addItemToCart: () => {}
+    // function to add to quantity separately and control it. 
+    addItemToCart: () => { },
+    cartCount: 0
 });
 
 export const CartProvider = ({ children }) => {
 
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [cartItems, setCartItems] = useState([]);
+    const [cartCount, setCartCount] = useState(0);
+
+    useEffect(() => {
+        const newCartCount = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0)
+        setCartCount(newCartCount);
+    }, [cartItems]);
 
     // Funtion to triggers whenever user clicks on AddToCartButton and increase the quantity by 1
     // Once it is already in CartItemDropdown.
@@ -43,7 +49,7 @@ export const CartProvider = ({ children }) => {
         setCartItems(addCartItem(cartItems, productToAdd));
     }
 
-    const value = { isCartOpen, setIsCartOpen, addItemToCart,cartItems };
+    const value = { isCartOpen, setIsCartOpen, addItemToCart,cartItems, cartCount };
      
     return <CartContext.Provider value={ value }>{ children }</CartContext.Provider>
 }
