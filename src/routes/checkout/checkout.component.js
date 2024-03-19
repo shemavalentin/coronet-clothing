@@ -2,9 +2,7 @@ import React, { useContext } from "react";
 import { CartContext } from '../../contexts/cart.contenxt';
 import './checkout.styles.scss'
 
-
 const Checkout = () => {
-
     //getting cars from CartContext
     const { cartItems, addItemToCart, removeItemToCart } = useContext(CartContext);
     return (

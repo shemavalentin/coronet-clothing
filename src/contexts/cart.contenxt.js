@@ -1,12 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-
 // Helper function to help in finding in existing array and increase it if found one match the ID
 // Otherwise make an other cartItem.
 
 const addCartItem = (cartItems, productToAdd) => {
     //find if cartItems contains productToAdd
-
     const existingCartItem = cartItems.find((cartItem) => cartItem.id === productToAdd.id);
     // if found, increament quantity
 
@@ -22,7 +20,6 @@ const addCartItem = (cartItems, productToAdd) => {
 }
 
 // Creating a helper function to remove cartItems from the checkout component.
-
 const removeCartItem = (cartItems, cartItemToRemove) => {
     // find the cart item to remove
     const existingCartItem = cartItems.find((cartItem) => cartItem.id === cartItemToRemove.id);
@@ -38,19 +35,15 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
                 ? { ...cartItem, quantity: cartItem.quantity - 1 }
                 : cartItem )
     }
-
 export const CartContext = createContext({
     isCartOpen: false,
     setCartIsOpen: () => { },
     cartItems: [],
-
     // function to add to quantity separately and control it. 
     addItemToCart: () => { },
     
     // function to remove item
-
     removeItemFromCart: () => {},
-
     cartCount: 0
 });
 
