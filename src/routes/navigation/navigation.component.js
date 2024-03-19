@@ -16,7 +16,6 @@ const Navigation = () => {
   // bringing Cart context to naviagation component in order to use it
 
   const { isCartOpen } = useContext(CartContext);
-  
   return (
     <>
       <div className="navigation">
