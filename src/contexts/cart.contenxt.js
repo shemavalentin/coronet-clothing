@@ -34,13 +34,23 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
             cartItem.id === cartItemToRemove.id
                 ? { ...cartItem, quantity: cartItem.quantity - 1 }
                 : cartItem )
-    }
+}
+
+
+///  A HELPER FUNCTION TO CLEAR CART
+
+const clearCartItem = (cartItems, cartItemToClear) => cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
+
 export const CartContext = createContext({
     isCartOpen: false,
     setCartIsOpen: () => { },
     cartItems: [],
     // function to add to quantity separately and control it. 
     addItemToCart: () => { },
+
+    //function to clear item from cart
+
+    clearItemFromCart: () => { },
     
     // function to remove item
     removeItemFromCart: () => {},
@@ -69,8 +79,12 @@ export const CartProvider = ({ children }) => {
     const removeItemToCart = (cartItemToRemove) => {
         setCartItems(removeCartItem(cartItems, cartItemToRemove));
     }
-
-    const value = { isCartOpen, setIsCartOpen, addItemToCart,removeItemToCart,cartItems, cartCount };
+    // Removing the Item
+    const clearItemFromCart = (cartItemToClear) => {
+        setCartItems(clearCartItem(cartItems, cartItemToClear));
+    }
+    
+    const value = { isCartOpen, setIsCartOpen, addItemToCart,removeItemToCart,clearItemFromCart,cartItems, cartCount };
      
     return <CartContext.Provider value={ value }>{ children }</CartContext.Provider>
 }
