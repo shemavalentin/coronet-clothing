@@ -47,7 +47,6 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlePro
 export const db = getFirestore();
 
 // Methode to create collection and at the same time the documents
-
 export const addCollectionAndDocuments = async (
   collectionKey,
   objectsToAdd,
