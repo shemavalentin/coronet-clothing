@@ -10,13 +10,13 @@ import {
   signOut,
   onAuthStateChanged
 } from 'firebase/auth';
-
-
 import {
   doc,
   getDoc,
   getFirestore,
-  setDoc
+  setDoc, 
+  collection,
+  writeBatch,
 } from 'firebase/firestore'
 
 // Web app's Firebase configuration
@@ -45,6 +45,29 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlePro
 
 // Creating db
 export const db = getFirestore();
+
+// Methode to create collection and at the same time the documents
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd,
+  
+) => {
+  const collectionRef = collection(db, collectionKey);
+  // creating a successful transaction using a (Batch) to make sure that my all objects were sent to the collection successfully.
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);    
+  });
+
+  // Now firing off the bacth
+
+  await batch.commit();
+  console.log('Done Successfully!');
+
+}
 
 // Method to take data from authentication and store that inside the firestore.
 export const createUserDocumentFromAuth = async (
