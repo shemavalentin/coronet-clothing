@@ -4,26 +4,27 @@ import { getCategoriesAndDocuments } from '../utils/firebase/firebase.utils';
 //import SHOP_DATA from '../shoping-data.js';
 
 // creating the context to store value that will be passed to the Provider
-export const ProductsContext = createContext({
-    products: [],
+export const CategoriesContext = createContext({
+    categoriesMap: {},
 });
 
 // We alse need to export the Provider
 
-export const ProductsProvider = ({ children }) => {
-    const [products, setProducts] = useState([]);
+export const CategoriesProvider = ({ children }) => {
+    const [categoriesMap, setCategoriesMap] = useState({});
     
     // Firing the bacth in products context which will fire once. Here I used useEffect
     useEffect(() => {
         const getCategoriesMap = async () => {
             const categoryMap = await getCategoriesAndDocuments(); 
             console.log(categoryMap);
+            setCategoriesMap(categoryMap)
         }
         getCategoriesMap();
     },[])
 
-    const value = { products };
+    const value = { categoriesMap };
     return (
-        <ProductsContext.Provider value={value }>{ children }</ProductsContext.Provider>
+        <CategoriesContext.Provider value={value }>{ children }</CategoriesContext.Provider>
     )
 }
