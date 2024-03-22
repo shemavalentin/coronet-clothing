@@ -17,6 +17,8 @@ import {
   setDoc, 
   collection,
   writeBatch,
+  query,
+  getDocs
 } from 'firebase/firestore'
 
 // Web app's Firebase configuration
@@ -55,9 +57,8 @@ export const addCollectionAndDocuments = async (
   const collectionRef = collection(db, collectionKey);
   // creating a successful transaction using a (Batch) to make sure that my all objects were sent to the collection successfully.
   const batch = writeBatch(db);
-
   objectsToAdd.forEach((object) => {
-    const docRef = doc(collectionRef, object.title.toLowerCase());
+    const docRef = doc (collectionRef, object.title.toLowerCase());
     batch.set(docRef, object);    
   });
 
@@ -67,6 +68,27 @@ export const addCollectionAndDocuments = async (
   console.log('Done Successfully!');
 
 }
+
+// Getting documents from firestore that are in form of object (Convoluted part of Firestore)
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+
+  // a gotcha here, Creating a query by passing in collectionRef
+  const q = query(collectionRef);
+  const querySnapshot = await getDocs(q);
+
+  // From here we are able to access the different snapshot off of query snapshot which gives an array
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+}
+
+
 
 // Method to take data from authentication and store that inside the firestore.
 export const createUserDocumentFromAuth = async (
