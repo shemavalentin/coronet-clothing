@@ -6,7 +6,8 @@ import { ReactComponent as CoronetLogo } from '../../assets/crown.svg';
 import { UserContext } from "../../contexts/user.context";
 import { CartContext } from "../../contexts/cart.contenxt";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
-import './navigation.style.scss';
+
+import { NavigationContainer, NavLinks, NavLink, LogoContainer } from './navigation.style';
 
 //Building navigation bar that will always stay on the page
 const Navigation = () => {
@@ -18,32 +19,33 @@ const Navigation = () => {
   const { isCartOpen } = useContext(CartContext);
   return (
     <>
-      <div className="navigation">
-        <Link className="logo-container" to='/'>
+      <NavigationContainer>
+
+        <LogoContainer to='/'>
           <CoronetLogo className=" logo " />
-        </Link>
-        <div className="nav-links-container">
-          <Link className=" nav-link" to='/shop'>
-            SHOP
-          </Link>
+        </LogoContainer>
+
+        <NavLinks>
+          <NavLink to='/shop'> SHOP </NavLink>
+
           {/* We need to the logged in user the sign out option  */}
 
           {
             currentUser ? (
-              <span className="nav-link" onClick={signOutUser}>
+              <NavLink as = 'span' onClick={signOutUser}>
                 {' '}
                 SIGN OUT{' '}
-              </span>
+              </NavLink>
             ) : (
-              <Link className=" nav-link" to='/auth'>
+              <NavLink to='/auth'>
                 SIGN IN
-              </Link>
+              </NavLink>
             )}
           <CartIcon />
-        </div>
-        {/* Using short circuit operator and the functions are alwayse truthy */}
-        { isCartOpen && <CartDropdown />}
-      </div>
+        </NavLinks>
+         {/* Using short circuit operator and the functions are alwayse truthy */}
+        { isCartOpen && <CartDropdown />} 
+      </NavigationContainer>
       <Outlet />
     </>
   );

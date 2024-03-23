@@ -2,7 +2,7 @@ import Reat, { useState } from 'react'
 import FormInput from '../form-input/form-input.component';
 import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils';
 import './sign-in-form.style.scss';
-import Button from '../button/button.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
 // We can track each input using their states
 // we can also use an object as long as we know all input have the same inputs.
@@ -86,7 +86,7 @@ const SignInForm = () => {
                 />
                 <div className='buttons-container'>
                     <Button type='submit'>Sign In</Button>
-                    <Button type = 'button' buttonType='google' onClick= {SignInWithGoogle}>Google Sign in</Button>                   
+                    <Button  buttonType={BUTTON_TYPE_CLASSES.google} type='button' onClick= {SignInWithGoogle}>Google Sign in</Button>                   
                 </div>           
             </form>
         </div>
