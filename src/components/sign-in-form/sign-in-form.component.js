@@ -1,7 +1,7 @@
 import Reat, { useState } from 'react'
 import FormInput from '../form-input/form-input.component';
 import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils';
-import './sign-in-form.style.scss';
+import { SignInContainer, ButtonsContainer } from './sign-in-form.style';
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
 // We can track each input using their states
@@ -64,7 +64,7 @@ const SignInForm = () => {
     }
 
     return (
-        <div className='sign-up-container'>
+        <SignInContainer>
             <h2> Already have an account? </h2>
             <span> Sign in with email and password </span>
             <form onSubmit={ handleSubmit }>              
@@ -84,12 +84,12 @@ const SignInForm = () => {
                     name='password'
                     value={password}
                 />
-                <div className='buttons-container'>
+                <ButtonsContainer>
                     <Button type='submit'>Sign In</Button>
                     <Button  buttonType={BUTTON_TYPE_CLASSES.google} type='button' onClick= {SignInWithGoogle}>Google Sign in</Button>                   
-                </div>           
+                </ButtonsContainer>           
             </form>
-        </div>
+        </SignInContainer>
     )
 }
 
