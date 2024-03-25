@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import { onAuthStateChangedListener,createUserDocumentFromAuth } from '../utils/firebase/firebase.utils';
 
 // Cse React contex possess two pieces let's first create
@@ -9,10 +9,41 @@ export const UserContext = createContext({
     setCurrentUser: () => null
 }); 
 
+// Using Reducers in context. useReducer works the the same as useState hook.
+export const USER_ACTION_TYPES = {
+    SET_CURRENT_USER: 'SET_CURRENT_USER'
+}
+
+const userReducer = (state, action) => {
+    console.log('dispatched');
+    console.log(action);
+    const { type, payload } = action;
+    
+    switch (type) {
+        case USER_ACTION_TYPES.SET_CURRENT_USER:
+            return {
+                ...state,
+                currentUser:payload
+            }
+        default:
+            throw new Error(`Unhandled type ${type} in userReducer`);
+    }
+}
+
+const INITIAL_STATE = {
+    currentUser:null
+}
 // UserProvider: the actual component( the literal functional component)
 // to allow any of it's children to access values of its use state.
+
 export const UserProvider = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState(null);
+    // const [currentUser, setCurrentUser] = useState(null);
+    const [{ currentUser }, dispatch] = useReducer(userReducer, INITIAL_STATE)
+    console.log(currentUser);
+    const setCurrentUser = (user) => {
+        dispatch({ type: USER_ACTION_TYPES.SET_CURRENT_USER, payload:user })
+    }
+
     const value = { currentUser, setCurrentUser };
 
     // Mounting the onAuthStateChangedListener which is an observer listener to User Context/ unmounting after run
@@ -31,3 +62,15 @@ export const UserProvider = ({ children }) => {
     return <UserContext.Provider value={value} >{ children }</UserContext.Provider>
 
 }
+/*
+--------- REDUCERS -------------
+These are functions that return object. It also receives a state (object state) and an action
+Then it will rertun the current userState after performing such action.
+
+const userReducer = (state, action) => {
+return {
+    currentUser: ...... These are needed to derive what the next value should be
+        
+    }
+}
+*/

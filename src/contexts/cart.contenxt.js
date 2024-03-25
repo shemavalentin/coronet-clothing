@@ -57,7 +57,7 @@ export const CartContext = createContext({
     cartCount: 0,
     cartTotal: 0
 });
-
+ 
 export const CartProvider = ({ children }) => {
 
     const [isCartOpen, setIsCartOpen] = useState(false);
@@ -75,7 +75,7 @@ export const CartProvider = ({ children }) => {
         setCartTotal(newCartTotal);
     }, [cartItems]);
 
-    // Funtion to triggers whenever user clicks on AddToCartButton and increase the quantity by 1
+    // Function to triggers whenever user clicks on AddToCartButton and increase the quantity by 1
     // Once it is already in CartItemDropdown.
 
     const addItemToCart = (productToAdd) => {
