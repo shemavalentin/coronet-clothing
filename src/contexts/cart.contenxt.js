@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect, useReducer } from 'react';
+import React, { createContext, useReducer } from 'react';
+import { createAction } from '../utils/reducer/reducer.utils';
 
 // Helper function to help in finding in existing array and increase it if found one match the ID
 // Otherwise make an other cartItem.
@@ -107,7 +108,9 @@ export const CartProvider = ({ children }) => {
 // Generate newCartTotal
         const newCartTotal = newCartItems.reduce((total, cartItem) => total + cartItem.quantity * cartItem.price, 0);
 
-        dispatch({ type: CART_ACTION_TYPES.SET_CART_ITEMS, payload: { cartItems: newCartItems, cartTotal: newCartTotal, cartCount: newCartCount } });
+        dispatch(
+            createAction(CART_ACTION_TYPES.SET_CART_ITEMS, { cartItems: newCartItems, cartTotal: newCartTotal, cartCount: newCartCount } )
+        );
     }
 
     // Function to triggers whenever user clicks on AddToCartButton and increase the quantity by 1
@@ -132,9 +135,12 @@ export const CartProvider = ({ children }) => {
     // Setting a function to control isCartOpen
     
     const setIsCartOpen = (bool) => {
-        dispatch({ type: CART_ACTION_TYPES.SET_IS_CART_OPEN, payload: bool });
+        dispatch(
+            createAction(
+                CART_ACTION_TYPES.SET_IS_CART_OPEN, bool               
+            )        
+        );
     }
-
     const value = { isCartOpen, setIsCartOpen , addItemToCart,removeItemToCart,clearItemFromCart,cartItems, cartCount, cartTotal };
      
     return <CartContext.Provider value={ value }>{ children }</CartContext.Provider>
