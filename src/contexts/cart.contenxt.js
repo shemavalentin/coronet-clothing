@@ -78,7 +78,6 @@ const cartReducer = (state, action) => {
 
     switch (type) {
         case CART_ACTION_TYPES.SET_CART_ITEMS:
-
             return {
                 ...state,
                 ...payload
@@ -94,7 +93,6 @@ const cartReducer = (state, action) => {
             throw new Error(`Unhandled type of ${type} in cartReducer`);
     }    
 }
-
 export const CartProvider = ({ children }) => {
 
     const [{cartItems, isCartOpen, cartCount, cartTotal  }, dispatch] = useReducer(cartReducer, INITIAL_STATE)

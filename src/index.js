@@ -5,7 +5,6 @@ import App from './App';
 import { UserProvider } from './contexts/user.context';
 import { CategoriesProvider } from './contexts/categories.context';
 import { CartProvider } from './contexts/cart.contenxt';
-
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
 

@@ -37,6 +37,7 @@ const INITIAL_STATE = {
 
 export const UserProvider = ({ children }) => {
     // const [currentUser, setCurrentUser] = useState(null);
+
     const [{ currentUser }, dispatch] = useReducer(userReducer, INITIAL_STATE)
     const setCurrentUser = (user) => {
         dispatch( createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user))
@@ -44,7 +45,7 @@ export const UserProvider = ({ children }) => {
 
     const value = { currentUser, setCurrentUser };
 
-    // Mounting the onAuthStateChangedListener which is an observer listener to User Context/ unmounting after run
+    // M0 ounting the onAuthStateChangedListener which is an observer listener to User Context/ unmounting after run
     useEffect(() => {
         const unsubscribe = onAuthStateChangedListener((user) => {
             if (user) {
@@ -58,7 +59,6 @@ export const UserProvider = ({ children }) => {
 
     //receiving the actual values from UserContext and rendering children 
     return <UserContext.Provider value={value} >{ children }</UserContext.Provider>
-
 }
 /*
 --------- REDUCERS -------------
