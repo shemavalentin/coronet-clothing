@@ -5,13 +5,14 @@ import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/card-dropdown/cart-dropdown.component";
 import { ReactComponent as CoronetLogo } from '../../assets/crown.svg';
 import { CartContext } from "../../contexts/cart.contenxt";
+import { selectCurrentUser } from "../../store/user/user.selector";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 import { NavigationContainer, NavLinks, NavLink, LogoContainer } from './navigation.style';
 
 //Building navigation bar that will always stay on the page
 const Navigation = () => {
- const currentUser = useSelector((state) => state.user.currentUser)
+  const currentUser = useSelector(selectCurrentUser);
   // Importing user context in navigation to use it
   // const { currentUser } = useContext(UserContext);
 
