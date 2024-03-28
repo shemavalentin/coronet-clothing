@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/card-dropdown/cart-dropdown.component";
 import { ReactComponent as CoronetLogo } from '../../assets/crown.svg';
-import { UserContext } from "../../contexts/user.context";
 import { CartContext } from "../../contexts/cart.contenxt";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
@@ -11,8 +11,9 @@ import { NavigationContainer, NavLinks, NavLink, LogoContainer } from './navigat
 
 //Building navigation bar that will always stay on the page
 const Navigation = () => {
+ const currentUser = useSelector((state) => state.user.currentUser)
   // Importing user context in navigation to use it
-  const { currentUser } = useContext(UserContext);
+  // const { currentUser } = useContext(UserContext);
 
   // bringing Cart context to naviagation component in order to use it
 

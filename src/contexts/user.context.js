@@ -13,7 +13,11 @@ export const UserContext = createContext({
 // Using Reducers in context. useReducer works the the same as useState hook.
 export const USER_ACTION_TYPES = {
     SET_CURRENT_USER: 'SET_CURRENT_USER'
-}
+};
+
+const INITIAL_STATE = {
+    currentUser: null
+};
 
 const userReducer = (state, action) => {
     const { type, payload } = action;
@@ -21,6 +25,7 @@ const userReducer = (state, action) => {
     switch (type) {
         case USER_ACTION_TYPES.SET_CURRENT_USER:
             return {
+                // What the reducer will depend on updating the state
                 ...state,
                 currentUser: payload
             }
@@ -29,9 +34,7 @@ const userReducer = (state, action) => {
     }
 }
 
-const INITIAL_STATE = {
-    currentUser:null
-}
+
 // UserProvider: the actual component( the literal functional component)
 // to allow any of it's children to access values of its use state.
 
@@ -71,4 +74,8 @@ return {
         
     }
 }
+
+A dispatch funtion: whenever you call it, you pass it an action(type, payload)
+When you need a reducer to receive an action, you call a dispatch and pass it an action
+then the dispatch will pass that action through the statements and update the reducer accordingly. 
 */
