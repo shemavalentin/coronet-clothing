@@ -79,17 +79,8 @@ export const getCategoriesAndDocuments = async () => {
   const querySnapshot = await getDocs(q);
 
   // From here we are able to access the different snapshot off of query snapshot which gives an array
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
-
-  return categoryMap;
+  return querySnapshot.docs.map(docSnapshot => docSnapshot.data())
 }
-
-
-
 // Method to take data from authentication and store that inside the firestore.
 export const createUserDocumentFromAuth = async (
   userAuth,
@@ -125,7 +116,6 @@ export const createUserDocumentFromAuth = async (
 }
 
 // Authenticating user to the firebase and manage how the app interfaces with the external service (firebase) so that I'll be able to change in one place even though methods have been used in many places
-
 // INterface for creating user to Firebase
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password)
@@ -136,7 +126,7 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
 //Authenticating user Interface
 
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
-  if (!email || !password)
+  if (!email|| !password)
     return;
   return await signInWithEmailAndPassword(auth, email, password)
 }
