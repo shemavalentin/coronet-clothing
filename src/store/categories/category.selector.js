@@ -1,6 +1,22 @@
-export const selectCategoriesMap = (state) => state.categories.categories
-.reduce((acc, category) => {
-    const { title, items } = category;
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
+import { createSelector } from "reselect";
+
+// Using Memoization technique to ceate initial selector
+// That gives us back that slice of the reducer we need which is the categories reducer
+
+const selecteCategoryReducer = (state) => state.categories;
+
+// Using that slice inside the memoize selector,
+export const selectCategories = createSelector(
+  [selecteCategoryReducer],
+  (categoriesSlice) => categoriesSlice.categories
+);
+
+export const selectCategoriesMap = createSelector(
+  [selectCategories],
+  (categories) =>
+    categories.reduce((acc, category) => {
+      const { title, items } = category;
+      acc[title.toLowerCase()] = items;
+      return acc;
+    }, {})
+);
