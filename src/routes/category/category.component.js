@@ -9,12 +9,10 @@ import { CategoryContainer, Title } from "./category.styles";
 const Category = () => {
   // Use categories from the Url
   const { category } = useParams();
-  console.log("render/re-rendering category component");
   const categoriesMap = useSelector(selectCategoriesMap);
   const [products, setProducts] = useState(categoriesMap[category]);
 
   useEffect(() => {
-    console.log("effect fired calling products");
     setProducts(categoriesMap[category]);
   }, [category, categoriesMap]);
 
