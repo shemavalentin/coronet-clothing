@@ -3,6 +3,7 @@ import logger from "redux-logger";
 import { rootReducer } from "./root-reducer";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { thunk } from "redux-thunk";
 
 // Following are step by step to write a store.
 // creating my own middleware(a currying func: a function that returns an other function )
@@ -27,9 +28,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 // const middlewares = [process.env.NODE_ENV === "development" && logger].filter(
 //   Boolean
 // );
-const middlewares = [process.env.NODE_ENV !== "production" && logger].filter(
-  Boolean
-);
+const middlewares = [
+  process.env.NODE_ENV !== "production" && logger,
+  thunk,
+].filter(Boolean);
 
 // Using Redux dev tool
 
