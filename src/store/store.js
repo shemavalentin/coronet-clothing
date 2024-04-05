@@ -16,9 +16,10 @@ const persistConfig = {
   // or cast the key
   storage,
 
-  // What we need to  not persist
-
-  blacklist: ["user"],
+  // What we need to  not persist in local storage persistaance.
+  //blacklist: ["user"],
+  // We only need to persist on cart.
+  whitelist: ["cart"],
 };
 
 // Creating a persisted reducer using persistConfig
