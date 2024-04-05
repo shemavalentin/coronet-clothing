@@ -20,3 +20,10 @@ export const selectCategoriesMap = createSelector(
       return acc;
     }, {})
 );
+
+// Creating the condition to load data when the spinner is loading
+
+export const selectCategoriesIsLoading = createSelector(
+  [selecteCategoryReducer],
+  (categoriesSlice) => categoriesSlice.isLoading
+);
