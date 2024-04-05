@@ -3,7 +3,6 @@ import { CATEGORIES_ACTION_TYPES } from "./category.types";
 export const CATEGORIES_INITIAL_STATE = {
   categories: [],
   //Telling the reducer if it is in loading state for data it holds
-
   isLoading: false,
   error: null,
 };

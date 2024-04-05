@@ -51,6 +51,6 @@ export const store = legacy_createStore(
   composedEnhancers
 );
 
-// Eporting persister object which calls persist store using the store object
+// Eporting persistor object which calls persist store using the store object
 
 export const persistor = persistStore(store);
