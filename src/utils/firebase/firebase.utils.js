@@ -1,5 +1,4 @@
-
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from "firebase/app";
 import {
   getAuth,
   signInWithRedirect,
@@ -8,18 +7,18 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
-} from 'firebase/auth';
+  onAuthStateChanged,
+} from "firebase/auth";
 import {
   doc,
   getDoc,
   getFirestore,
-  setDoc, 
+  setDoc,
   collection,
   writeBatch,
   query,
-  getDocs
-} from 'firebase/firestore'
+  getDocs,
+} from "firebase/firestore";
 
 // Web app's Firebase configuration
 const firebaseConfig = {
@@ -28,22 +27,23 @@ const firebaseConfig = {
   projectId: "coronet-clothing-db-5fcd9",
   storageBucket: "coronet-clothing-db-5fcd9.appspot.com",
   messagingSenderId: "406449512496",
-  appId: "1:406449512496:web:e741fb7bc31a2e1b29cdf5"
+  appId: "1:406449512496:web:e741fb7bc31a2e1b29cdf5",
 };
 
 // Initialize Firebase
-   
+
 const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
-    prompt: " select_account"
-
+  prompt: " select_account",
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
-export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
+export const signInWithGooglePopup = () =>
+  signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, googleProvider);
 
 // Creating db
 export const db = getFirestore();
@@ -51,36 +51,34 @@ export const db = getFirestore();
 // Methode to create collection and at the same time the documents
 export const addCollectionAndDocuments = async (
   collectionKey,
-  objectsToAdd,
-  
+  objectsToAdd
 ) => {
   const collectionRef = collection(db, collectionKey);
   // creating a successful transaction using a (Batch) to make sure that my all objects were sent to the collection successfully.
   const batch = writeBatch(db);
   objectsToAdd.forEach((object) => {
-    const docRef = doc (collectionRef, object.title.toLowerCase());
-    batch.set(docRef, object);    
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
   });
 
   // Now firing off the bacth
 
   await batch.commit();
-  console.log('Done Successfully!');
-
-}
+  console.log("Done Successfully!");
+};
 
 // Getting documents from firestore that are in form of object (Convoluted part of Firestore)
 
 export const getCategoriesAndDocuments = async () => {
-  const collectionRef = collection(db, 'categories');
+  const collectionRef = collection(db, "categories");
 
   // a gotcha here, Creating a query by passing in collectionRef
   const q = query(collectionRef);
   const querySnapshot = await getDocs(q);
 
   // From here we are able to access the different snapshot off of query snapshot which gives an array
-  return querySnapshot.docs.map(docSnapshot => docSnapshot.data())
-}
+  return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+};
 // Method to take data from authentication and store that inside the firestore.
 export const createUserDocumentFromAuth = async (
   userAuth,
@@ -88,12 +86,12 @@ export const createUserDocumentFromAuth = async (
 ) => {
   if (!userAuth) return;
   //Check first if there is a document referance
-  const userDocRef = doc(db, 'users', userAuth.uid);
-  
+  const userDocRef = doc(db, "users", userAuth.uid);
+
   //The snapshot allows us to check whether the document exist and access the data.
   const userSnapshot = await getDoc(userDocRef);
- 
-   // if user data does not exist
+
+  // if user data does not exist
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
@@ -103,37 +101,51 @@ export const createUserDocumentFromAuth = async (
         displayName,
         email,
         createdAt,
-        ...additionalInformation
+        ...additionalInformation,
       });
-
     } catch (error) {
-      console.log('Error creating the user', error.message);      
+      console.log("Error creating the user", error.message);
     }
   }
 
   // return userDocRef
-  return userDocRef;  
-}
+  return userDocRef;
+};
 
 // Authenticating user to the firebase and manage how the app interfaces with the external service (firebase) so that I'll be able to change in one place even though methods have been used in many places
 // INterface for creating user to Firebase
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
-  if (!email || !password)
-    return;
-  return await createUserWithEmailAndPassword(auth, email, password)
-}
+  if (!email || !password) return;
+  return await createUserWithEmailAndPassword(auth, email, password);
+};
 
 //Authenticating user Interface
 
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
-  if (!email|| !password)
-    return;
-  return await signInWithEmailAndPassword(auth, email, password)
-}
+  if (!email || !password) return;
+  return await signInWithEmailAndPassword(auth, email, password);
+};
 
-// Interface for SigningOut the user 
+// Interface for SigningOut the user
 export const signOutUser = async () => await signOut(auth);
 
 // Creating a helper function for Observer Listener pettern
 // It is an observer listerner
-export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
+
+// By using Saga, let's check first if there is an already authenticated user
+// Here using a promise based function from observable listener func
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};
