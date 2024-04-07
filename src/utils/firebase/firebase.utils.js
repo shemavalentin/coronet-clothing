@@ -109,7 +109,7 @@ export const createUserDocumentFromAuth = async (
   }
 
   // return userDocRef
-  return userDocRef;
+  return userSnapshot;
 };
 
 // Authenticating user to the firebase and manage how the app interfaces with the external service (firebase) so that I'll be able to change in one place even though methods have been used in many places
