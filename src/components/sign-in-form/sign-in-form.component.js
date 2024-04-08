@@ -34,26 +34,11 @@ const SignInForm = () => {
     event.preventDefault();
 
     // Then attempt to create the user with try & catch as we can fail to call to extrenal firebase server
-
     try {
       dispatch(emailSignInStart(email, password));
       resetFormFields();
     } catch (error) {
-      switch (error.code) {
-        case "auth/wrong-password":
-          alert("Incorrect password for email");
-
-          break;
-
-        case " auth/user-not-found ":
-          alert(" No user associatted with email");
-
-          break;
-
-        default:
-          console.log(error);
-      }
-      console.log(error);
+      console.log("User signin failed", error);
     }
   };
 

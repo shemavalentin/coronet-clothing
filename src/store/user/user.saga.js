@@ -33,7 +33,6 @@ export function* getSnapshotFromUserAuth(userAuth, additionalDetails) {
 }
 
 // SignIn with Email&Password using Redux Saga
-
 export function* signInWithGoogle() {
   try {
     //trigger the pop, then take that authentication object pull off the user which is userAuth
@@ -53,7 +52,7 @@ export function* signInWithEmail({ payload: { email, password } }) {
       email,
       password
     );
-    yield (getSnapshotFromUserAuth, user);
+    yield call(getSnapshotFromUserAuth, user);
   } catch (error) {
     yield put(signInFailed(error));
   }
