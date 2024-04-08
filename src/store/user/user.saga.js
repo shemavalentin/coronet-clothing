@@ -1,11 +1,12 @@
 import { takeLatest, all, call, put } from "redux-saga/effects";
 import { USER_ACTION_TYPES } from "./user.types";
-import { signInSuccess, signInFailed } from "./user.action";
+import { signInSuccess, signInFailed, signUpSuccess } from "./user.action";
 import {
   getCurrentUser,
   createUserDocumentFromAuth,
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
+  createAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 
 // Once we have the userAauth object, we need to create a snapshot fron db
@@ -63,6 +64,25 @@ export function* isUserAuthenticated() {
   }
 }
 
+// SignUp function generator
+export function* signUp({ payload: { email, password, displayName } }) {
+  try {
+    const { user } = yield call(
+      createAuthUserWithEmailAndPassword,
+      email,
+      password
+    );
+    yield put(signUpSuccess(user, { displayName }));
+  } catch (error) {
+    yield put(signInFailed(error));
+  }
+}
+
+// Breaking up and creating another function generator to trigger signIn after SignUp
+export function* signInAfterSignUp({ payload: { user, additionalDetails } }) {
+  yield call(getSnapshotFromUserAuth, user, additionalDetails);
+}
+
 // Creating the entry point for email and password signIn or Google signIn
 export function* onGoogleSignInStart() {
   yield takeLatest(USER_ACTION_TYPES.GOOGLE_SIGN_IN_START, signInWithGoogle);
@@ -76,10 +96,24 @@ export function* onEmailSignInStart() {
   yield takeLatest(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, signInWithEmail);
 }
 
+// Entry point saga for signupStart
+
+export function* onSignUpStart() {
+  yield takeLatest(USER_ACTION_TYPES.SIGN_UP_START, signUp);
+}
+// Entry point for SignUpSuccess
+export function* onSignUpSuccess() {
+  yield takeLatest(USER_ACTION_TYPES.SIGN_UP_SUCCESS, signInAfterSignUp);
+}
+
+// Saga function
+
 export function* UserSagas() {
   yield all([
     call(onCheckUserSession),
     call(onGoogleSignInStart),
     call(onEmailSignInStart),
+    call(onSignUpStart),
+    call(onSignUpSuccess),
   ]);
 }

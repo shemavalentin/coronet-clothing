@@ -28,3 +28,32 @@ export const signInSuccess = (user) =>
 
 export const signInFailed = (error) =>
   createAction(USER_ACTION_TYPES.SIGN_IN_FAILED, error);
+
+// Creating actions for SignUp
+
+export const signUpStart = (email, password, displayName) =>
+  createAction(USER_ACTION_TYPES.SIGN_UP_START, {
+    email,
+    password,
+    displayName,
+  });
+
+export const signUpSuccess = (user, additionalDetails) =>
+  createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user, additionalDetails });
+
+export const signUpFailed = (error) =>
+  createAction(USER_ACTION_TYPES.SIGN_UP_FAILED, error);
+
+// Creating actions for SignOut Form ( Here the signout doesn't need the payload)
+
+export const signOutStart = () =>
+  createAction(USER_ACTION_TYPES.SIGN_OUT_START);
+
+// Here the success will be set to null
+export const signOutSuccess = () =>
+  createAction(USER_ACTION_TYPES.SIGN_OUT_SUCCESS);
+
+// Fail alway need error as payload
+
+export const signOutFailed = (error) =>
+  createAction(USER_ACTION_TYPES.SIGN_OUT_FAILED, error);
