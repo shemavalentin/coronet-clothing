@@ -1,13 +1,12 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/card-dropdown/cart-dropdown.component";
 import { ReactComponent as CoronetLogo } from "../../assets/crown.svg";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
-import { signOutUser } from "../../utils/firebase/firebase.utils";
-
+import { signOutStart } from "../../store/user/user.action";
 import {
   NavigationContainer,
   NavLinks,
@@ -17,13 +16,12 @@ import {
 
 //Building navigation bar that will always stay on the page
 const Navigation = () => {
+  const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
-  // Importing user context in navigation to use it
-  // const { currentUser } = useContext(UserContext);
-
   // bringing Cart context to naviagation component in order to use it
-
   const isCartOpen = useSelector(selectIsCartOpen);
+
+  const signOutUser = () => dispatch(signOutStart());
   return (
     <>
       <NavigationContainer>

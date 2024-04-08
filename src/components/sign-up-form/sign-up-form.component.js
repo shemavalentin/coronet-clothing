@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import FormInput from "../form-input/form-input.component";
-import {
-  createAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
-} from "../../utils/firebase/firebase.utils";
-
 import "./sign-up-form.style.js";
 import Button from "../button/button.component";
 import { SignUpContainer } from "./sign-up-form.style.js";

@@ -1,12 +1,19 @@
 import { takeLatest, all, call, put } from "redux-saga/effects";
 import { USER_ACTION_TYPES } from "./user.types";
-import { signInSuccess, signInFailed, signUpSuccess } from "./user.action";
+import {
+  signInSuccess,
+  signInFailed,
+  signUpSuccess,
+  signOutSuccess,
+  signOutFailed,
+} from "./user.action";
 import {
   getCurrentUser,
   createUserDocumentFromAuth,
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
   createAuthUserWithEmailAndPassword,
+  signOutUser,
 } from "../../utils/firebase/firebase.utils";
 
 // Once we have the userAauth object, we need to create a snapshot fron db
@@ -39,7 +46,6 @@ export function* signInWithGoogle() {
 }
 
 //Creating function to signIn with Email and Password
-
 export function* signInWithEmail({ payload: { email, password } }) {
   try {
     const { user } = yield call(
@@ -78,6 +84,17 @@ export function* signUp({ payload: { email, password, displayName } }) {
   }
 }
 
+// Creating signOut function generator
+
+export function* signOut() {
+  try {
+    yield call(signOutUser);
+    yield put(signOutSuccess());
+  } catch (error) {
+    yield put(signOutFailed(error));
+  }
+}
+
 // Breaking up and creating another function generator to trigger signIn after SignUp
 export function* signInAfterSignUp({ payload: { user, additionalDetails } }) {
   yield call(getSnapshotFromUserAuth, user, additionalDetails);
@@ -92,6 +109,7 @@ export function* onCheckUserSession() {
   yield takeLatest(USER_ACTION_TYPES.CHECK_USER_SESSION, isUserAuthenticated);
 }
 
+// Entry point for signin with email&password
 export function* onEmailSignInStart() {
   yield takeLatest(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, signInWithEmail);
 }
@@ -106,8 +124,12 @@ export function* onSignUpSuccess() {
   yield takeLatest(USER_ACTION_TYPES.SIGN_UP_SUCCESS, signInAfterSignUp);
 }
 
-// Saga function
+// Entry onSignOutStart
+export function* onSignOutStart() {
+  yield takeLatest(USER_ACTION_TYPES.SIGN_OUT_START, signOut);
+}
 
+// Saga function
 export function* UserSagas() {
   yield all([
     call(onCheckUserSession),
@@ -115,5 +137,6 @@ export function* UserSagas() {
     call(onEmailSignInStart),
     call(onSignUpStart),
     call(onSignUpSuccess),
+    call(onSignOutStart),
   ]);
 }
