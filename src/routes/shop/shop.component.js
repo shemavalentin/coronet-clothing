@@ -11,7 +11,7 @@ const Shop = () => {
   // Firing the bacth in products context which will fire once. Here I used useEffect
   useEffect(() => {
     dispatch(fetchCategoriesStart());
-  }, []);
+  });
 
   return (
     <Routes>

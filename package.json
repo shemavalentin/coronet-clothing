@@ -1,6 +1,5 @@
 {
   "name": "coronet-clothing",
-  "homepage": "https://shemavalentin.github.io/coronet-clothing",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -29,9 +28,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
+
   },
   "eslintConfig": {
     "extends": [
