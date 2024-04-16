@@ -9,7 +9,6 @@ const PaymentForm = () => {
 
   const paymentHandler = async (e) => {
     // Pevent typical form to be submitted
-
     e.preventDefault();
 
     // Making sure that the above two hooks are loaded in when payment handler fired
@@ -17,10 +16,13 @@ const PaymentForm = () => {
       return;
     }
 
+    // Request to get the payment
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "post",
+      //request: "no-cors",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({ amount: 10000 }),
     }).then((res) => res.json());

@@ -7,6 +7,7 @@ import Authentication from "./routes/authentication/authentication.component";
 import Shop from "./routes/shop/shop.component";
 import Checkout from "./routes/checkout/checkout.component";
 import { checkUserSession } from "./store/user/user.action";
+//import PaymentForm from "./components/payment-form/payment-form.component";
 
 const App = () => {
   // Need to dispatch the setCurrentUser action object to the rootReducer
