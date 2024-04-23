@@ -79,6 +79,7 @@ const PaymentForm = () => {
           Pay Now
         </PaymentButton>
       </FormContainer>
+      <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     </PaymentFormContainer>
   );
 };
