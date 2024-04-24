@@ -1,4 +1,5 @@
 import { CATEGORIES_ACTION_TYPES } from "./category.types";
+
 import { createAction } from "../../utils/reducer/reducer.utils";
 
 // Let's create action, STARTING Action there won't be no payload needed
