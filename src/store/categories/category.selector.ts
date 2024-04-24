@@ -1,9 +1,13 @@
 import { createSelector } from "reselect";
 
+import { CategoriesState } from "./category.reducer";
+import { CategoryMap } from "./category.types";
+
+
 // Using Memoization technique to ceate initial selector
 // That gives us back that slice of the reducer we need which is the categories reducer
 
-const selecteCategoryReducer = (state) => state.categories;
+const selecteCategoryReducer = (state): CategoriesState => state.categories;
 
 // Using that slice inside the memoize selector,
 export const selectCategories = createSelector(
@@ -13,12 +17,12 @@ export const selectCategories = createSelector(
 
 export const selectCategoriesMap = createSelector(
   [selectCategories],
-  (categories) =>
+  (categories) : CategoryMap  =>
     categories.reduce((acc, category) => {
       const { title, items } = category;
       acc[title.toLowerCase()] = items;
       return acc;
-    }, {})
+    }, {} as CategoryMap)
 );
 
 // Creating the condition to load data when the spinner is loading

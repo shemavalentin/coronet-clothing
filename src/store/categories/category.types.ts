@@ -12,12 +12,17 @@ export type CategoryItem = {
   imageUrl: string;
   name: string;
   price: number;
-}
+};
 
 // Type
 export type Category = {
   title: string;
   imageUrl: string;
   items: CategoryItem[];
+};
 
+// Category Map Type
+
+export type CategoryMap = {
+  [key: string]: CategoryItem[];
 }

@@ -12,7 +12,7 @@ export type FetchCategoriesSuccess = ActionWithPayload<CATEGORIES_ACTION_TYPES.F
 export type FetchCategoriesFailed = ActionWithPayload<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED, Error>
 
 // The above are the three action types our reducer will accept.
-// Let' create a union to be able to pass these action types to reducer.
+// Let' create a Descriminatory union to be able to pass these action types to reducer.
 
 export type CategoryAction = FetchCategoriesStart | FetchCategoriesSuccess | FetchCategoriesFailed
 
