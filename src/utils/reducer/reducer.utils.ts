@@ -4,6 +4,12 @@
 
 import { AnyAction } from "redux-saga"
 
+//Creating matchable type  (AC: Action Creator)
+type Matchable<AC extends () => AnyAction> = AC & {
+    type: ReturnType<AC>['type'];
+    match(action: AnyAction): action is ReturnType<AC>;
+}
+
 export type ActionWithPayload<T, P> = {
     type: T;
     payload: P;
@@ -12,7 +18,6 @@ export type ActionWithPayload<T, P> = {
 export type Action<T> = {
     type: T;
 };
-
 
 // TypeScript Function overloading to determine whether we have a payload or not.
 // This will unable us to receive difference parameters as there will be the payload or not.
