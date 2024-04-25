@@ -10,6 +10,29 @@ type Matchable<AC extends () => AnyAction> = AC & {
     match(action: AnyAction): action is ReturnType<AC>;
 }
 
+// Matcher utility function that receives some action creator in order to create a new matchable type out of the above action creator.
+// These are also Types overloading 
+
+export function withMatcher<AC extends () => AnyAction & {
+    type: string
+}>(actionCreator: AC): Matchable<AC>;
+
+export function withMatcher<AC extends (...args: any[]) => AnyAction & { type: string }>(actionCreator: AC): Matchable<AC>
+
+export function withMatcher(actionCreator: Function) {
+    // returning action and assign to a varialbe
+    const type = actionCreator().type;
+    
+    // creating a actual mappable object
+
+    return Object.assign(actionCreator, {
+        type,
+        match(action: AnyAction) {
+            return action.type === type;
+        }
+    })        
+}
+
 export type ActionWithPayload<T, P> = {
     type: T;
     payload: P;
