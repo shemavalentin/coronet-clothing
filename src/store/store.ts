@@ -1,18 +1,36 @@
-import { compose, legacy_createStore, applyMiddleware } from "redux";
-import logger from "redux-logger";
+import { compose, legacy_createStore, applyMiddleware, Middleware } from "redux";
+
 import { rootReducer } from "./root-reducer";
-import { persistStore, persistReducer } from "redux-persist";
+
+import { persistStore, persistReducer, PersistConfig } from "redux-persist";
+
 import storage from "redux-persist/lib/storage";
+
+import logger from "redux-logger";
+
 //import { thunk } from "redux-thunk";
 import createSagaMiddleware from "redux-saga";
+
 import { rootSaga } from "./root-saga";
 
-// Following are step by step to write a store.
-// creating my own middleware(a currying func: a function that returns an other function )
 
-// telling Redux persist what we want
 
-const persistConfig = {
+// Typing the root state itself in store cze it has the actual states of all reducer.
+export type RootState = ReturnType<typeof rootReducer>
+
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+
+  }
+}
+
+type ExtendedPersistConfig = PersistConfig<RootState> & {
+  whitelist:(keyof RootState)[]
+}
+
+const persistConfig: ExtendedPersistConfig = {
   key: "root",
   //storage: storage
   // or cast the key
@@ -36,7 +54,7 @@ const middlewares = [
   process.env.NODE_ENV !== "production" && logger,
   //thunk,
   SagaMiddleware,
-].filter(Boolean);
+].filter((middleware): middleware is Middleware => Boolean (middleware));
 
 // Using Redux dev tool
 

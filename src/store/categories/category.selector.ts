@@ -1,5 +1,7 @@
 import { createSelector } from "reselect";
 
+import { RootState } from "../store";
+
 import { CategoriesState } from "./category.reducer";
 import { CategoryMap } from "./category.types";
 
@@ -7,7 +9,7 @@ import { CategoryMap } from "./category.types";
 // Using Memoization technique to ceate initial selector
 // That gives us back that slice of the reducer we need which is the categories reducer
 
-const selecteCategoryReducer = (state): CategoriesState => state.categories;
+const selecteCategoryReducer = (state: RootState): CategoriesState => state.categories;
 
 // Using that slice inside the memoize selector,
 export const selectCategories = createSelector(

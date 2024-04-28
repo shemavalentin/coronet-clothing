@@ -1,6 +1,6 @@
 import { AnyAction } from "redux-saga";
 
-import { setCartItems, setIsCartOpen, SetIsCartOpen } from "./cart.action";
+import { setCartItems, setIsCartOpen} from "./cart.action";
 
 import { CartItem } from "./cart.type";
 
