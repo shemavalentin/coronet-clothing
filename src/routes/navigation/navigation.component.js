@@ -1,12 +1,11 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/card-dropdown/cart-dropdown.component";
-import { ReactComponent as CoronetLogo } from "../../assets/crown.svg";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { signOutStart } from "../../store/user/user.action";
+import { ReactComponent as CoronetLogo } from "../../assets/crown.svg";
 import {
   NavigationContainer,
   NavLinks,
@@ -32,12 +31,9 @@ const Navigation = () => {
         <NavLinks>
           <NavLink to="/shop"> SHOP </NavLink>
 
-          {/* We need to the logged in user the sign out option  */}
-
           {currentUser ? (
             <NavLink as="span" onClick={signOutUser}>
-              {" "}
-              SIGN OUT{" "}
+              SIGN OUT
             </NavLink>
           ) : (
             <NavLink to="/auth">SIGN IN</NavLink>
