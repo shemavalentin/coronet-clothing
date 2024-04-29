@@ -3,9 +3,9 @@ import { useState, FormEvent, ChangeEvent } from "react";
 import { AuthError, AuthErrorCodes } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import FormInput from "../form-input/form-input.component";
-import "./sign-up-form.style.js";
+import "./sign-up-form.style";
 import Button from "../button/button.component";
-import { SignUpContainer } from "./sign-up-form.style.js";
+import { SignUpContainer } from "./sign-up-form.style";
 import { signUpStart } from "../../store/user/user.action";
 
 // We can track each input using their states
