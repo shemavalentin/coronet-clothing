@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import FormInput from "../form-input/form-input.component";
 import { SignInContainer, ButtonsContainer } from "./sign-in-form.style";
@@ -30,7 +30,7 @@ const SignInForm = () => {
     dispatch(googleSignInStart());
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // Then attempt to create the user with try & catch as we can fail to call to extrenal firebase server
@@ -43,7 +43,7 @@ const SignInForm = () => {
   };
 
   // To be able to handle changes , we need to create a function to do so
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
     setFormFields({ ...formFields, [name]: value });
