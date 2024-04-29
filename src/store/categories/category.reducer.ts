@@ -1,5 +1,5 @@
 
-import { UnknownAction} from "redux";
+import { UnknownAction } from "redux";
 
 import { Category } from "./category.types";
 
@@ -23,7 +23,7 @@ export const CATEGORIES_INITIAL_STATE : CategoriesState = {
 
 export const categoriesReducer = (
   state = CATEGORIES_INITIAL_STATE,
-  action : UnknownAction
+  action : UnknownAction 
 ): CategoriesState => {
   if (fetchCategoriesStart.match(action)) {
     return { ...state, isLoading: true };
@@ -39,19 +39,4 @@ export const categoriesReducer = (
   }
 
   return state;
-
-
-
-
-  // switch (action.type) {
-  //   case CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START:
-
-  //   case CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS:
-
-  //   case CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED:
-  //     return { ...state, error: action.payload, isLoading: false };
-
-  //   default:
-  //     return state;
-  // }
 };

@@ -1,4 +1,4 @@
-import { AnyAction } from "redux-saga";
+import { UnknownAction } from "redux";
 
 import { setCartItems, setIsCartOpen} from "./cart.action";
 
@@ -16,7 +16,7 @@ export const CART_INITIAL_STATE: CartState = {
   cartItems: [],
 };
 
-export const cartReducer = (state = CART_INITIAL_STATE, action: AnyAction): CartState => {
+export const cartReducer = (state = CART_INITIAL_STATE, action: UnknownAction): CartState => {
   if (setIsCartOpen.match(action)) {
     return {
       ...state,

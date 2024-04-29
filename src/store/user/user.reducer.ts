@@ -1,4 +1,5 @@
-import { UnknownAction } from "redux";
+//import { UnknownAction } from "redux";
+import { AnyAction } from "redux-saga";
 
 //import { USER_ACTION_TYPES } from "./user.types";
 
@@ -29,8 +30,7 @@ export const INITIAL_STATE : UserState = {
 };
 
 
-export const userReducer = (state = INITIAL_STATE, action: UnknownAction ) => {
-  //const { type, payload } = action;
+export const userReducer = (state = INITIAL_STATE, action: AnyAction ) => {
 
   // Typing correct switches
   if (signInSuccess.match(action)) {

@@ -4,7 +4,7 @@ import FormInput from "../form-input/form-input.component";
 import "./sign-up-form.style.js";
 import Button from "../button/button.component";
 import { SignUpContainer } from "./sign-up-form.style.js";
-import { signUpStart } from "../../store/user/user.action.js";
+import { signUpStart } from "../../store/user/user.action";
 
 // We can track each input using their states
 // we can also use an object as long as we know all input have the same inputs.
