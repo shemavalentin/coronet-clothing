@@ -1,5 +1,6 @@
 import { useState, FormEvent } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { StripeCardElement } from "@stripe/stripe-js";
 import { useSelector } from "react-redux";
 
 import { selectCurrentUser } from "../../store/user/user.selector";
@@ -11,6 +12,10 @@ import {
   FormContainer,
   PaymentButton,
 } from "./payment-form.styles";
+
+// By using safeguard/ predicate
+
+const ifValidCardElement = (card: StripeCardElement | null): card is StripeCardElement => card !== null;
 
 const PaymentForm = () => {
   const stripe = useStripe();
@@ -50,7 +55,7 @@ const PaymentForm = () => {
     // casting card to not be null
     const cardDetails = elements.getElement(CardElement);
 
-    if (cardDetails === null) return;
+    if (!ifValidCardElement (cardDetails)) return;
 
     const paymentResult = await stripe.confirmCardPayment(client_secret, {
       payment_method: {
