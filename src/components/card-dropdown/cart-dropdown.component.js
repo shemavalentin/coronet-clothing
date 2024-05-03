@@ -43,3 +43,7 @@ const CartDropdown = () => {
 };
 
 export default CartDropdown;
+
+//useMemo: a hook that memoize the return value
+
+// useCallback: a hook that used to memoize the function.
