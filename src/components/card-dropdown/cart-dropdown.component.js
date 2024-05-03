@@ -1,4 +1,4 @@
-import React from "react";
+import { useCallback } from "react";
 import { useSelector } from "react-redux";
 
 // A react hook to allow me navigate from one page to anather
@@ -17,12 +17,15 @@ import {
 const CartDropdown = () => {
   const cartItems = useSelector(selectCartItems);
   const navigate = useNavigate();
+  //const [temp, setTemp] = useState("A");
 
   // A function handler that calls Checkout page
+  // Using callback to optimize or memoize the goToCheckOutHandler function
 
-  const goToCheckoutHandler = () => {
+  const goToCheckoutHandler = useCallback(() => {
+    //console.log(temp);
     navigate("/checkout");
-  };
+  }, []);
 
   return (
     <CartDropdownContainer>
@@ -34,6 +37,7 @@ const CartDropdown = () => {
         )}
       </CartItems>
       <Button onClick={goToCheckoutHandler}> GO TO CHECKOUT </Button>
+      {/* <Button onClick={() => setTemp("B")}> Update </Button> */}
     </CartDropdownContainer>
   );
 };

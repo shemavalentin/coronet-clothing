@@ -41,8 +41,7 @@ const PaymentForm = () => {
       method: "post",
       //request: "no-cors",
       headers: {
-        "Content-Type": "application/json",
-  
+        "Content-Type": "application/json", 
       },
 
       body: JSON.stringify({ amount: amount * 100 }),
