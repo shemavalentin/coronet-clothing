@@ -1,3 +1,7 @@
+import { createGlobalStyle } from "styled-components";
+
+export const GlobalStyle = createGlobalStyle`
+
 body {
   margin: 0;
   padding: 20px 40px;
@@ -21,3 +25,4 @@ a {
   box-sizing: border-box;
 
 }
+`;

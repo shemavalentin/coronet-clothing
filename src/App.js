@@ -8,6 +8,8 @@ import { Routes, Route } from "react-router-dom";
 //import Checkout from "./routes/checkout/checkout.component";
 import Spinner from "./components/spinner/spinner.component";
 import { checkUserSession } from "./store/user/user.action";
+
+import { GlobalStyle } from "./global.styles";
 //import PaymentForm from "./components/payment-form/payment-form.component";
 
 // To make code splitting and chunking we need to download js loggin page when  we need it
@@ -45,6 +47,7 @@ const App = () => {
   return (
     // Then use suspense function to tell react what to render while waiting the lazy load
     <Suspense fallback={<Spinner />}>
+      <GlobalStyle />
       <Routes>
         <Route path="/" element={<Navigation />}>
           <Route index={true} element={<Home />} />

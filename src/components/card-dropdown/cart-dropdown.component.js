@@ -21,6 +21,8 @@ const CartDropdown = () => {
 
   // A function handler that calls Checkout page
   // Using callback to optimize or memoize the goToCheckOutHandler function
+  // The useCallback hook will memoise the function and it will alwayse return the same output
+  //function as long as the the dependancy array does not change.
 
   const goToCheckoutHandler = useCallback(() => {
     //console.log(temp);
